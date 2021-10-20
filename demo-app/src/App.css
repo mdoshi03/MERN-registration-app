@@ -1,0 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.homepage-bgimage {
+  background: url("./assets/background2.jpg");
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
