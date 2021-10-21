@@ -2,11 +2,11 @@ import { React, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 const Popup = (props) => {
-  const [showHide, setshowHide] = useState(props.trigger);
+  const showHide = props.show;
 
-  const handleModalShowHide = () => {
-    setshowHide(!showHide);
-  };
+  // const handleModalShowHide = () => {
+  //   showHide = !showHide;
+  // };
 
   return (
     <div>
@@ -16,7 +16,7 @@ const Popup = (props) => {
         </Modal.Header>
         <Modal.Body>{props.message}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleModalShowHide()}>
+          <Button variant="secondary" onClick={props.handleClose}>
             Close
           </Button>
         </Modal.Footer>

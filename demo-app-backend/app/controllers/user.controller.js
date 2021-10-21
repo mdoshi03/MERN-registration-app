@@ -20,17 +20,15 @@ exports.create = (req, res) => {
   });
 
   const { value, err } = schema.validate(data);
-  console.log("value");
-  console.log(value);
-  console.log("err");
-  console.log(err);
 
   const pass = schema.validate(data);
   if (pass.error) {
     console.log(pass.error);
+
     res.status(400).send({ status: "error", error: pass.error });
   } else {
-    // Create a Tutorial
+    // Create a user
+
     const user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -38,15 +36,17 @@ exports.create = (req, res) => {
       password: req.body.password,
     };
 
-    // Save Tutorial in the database
+    // Save user in the database
     User.create(user)
       .then((data) => {
         res.send(data);
       })
       .catch((err) => {
+        console.log(err.message);
+
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Tutorial.",
+            err.message || "Some error occurred while creating the User.",
         });
       });
   }
@@ -54,16 +54,16 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  User.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials.",
-      });
-    });
+  User.findAll().then((data) => {
+    res.send(data);
+  });
+  // .catch((err) => {
+  //   res.status(500).send({
+  //     message:
+  //       err.message || "Some error occurred while retrieving tutorials.",
+  //   });
+  // }
+  // );
 };
 
 // Find a single Tutorial with an id

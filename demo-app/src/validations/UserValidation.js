@@ -14,11 +14,7 @@ export const userSchema = Yup.object({
       "Email must match company domain"
     )
     .required("Email is required"),
-  phone: Yup.number()
-    .typeError("Enter a valid phone number")
-    .positive("A phone number can't start with a minus")
-    .integer("A phone number can't include a decimal point")
-    .required("A phone number is required"),
+
   password: Yup.string()
     .min(6, "Password must be at least 6 charaters")
     .required("Password is required"),

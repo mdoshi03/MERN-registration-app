@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/miracle-logo.svg";
+import logo from "../../assets/miracle-logo.svg";
 const NavBar = () => {
   return (
     <div>
