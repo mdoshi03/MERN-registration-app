@@ -5,7 +5,6 @@ import { TextField } from "./TextField";
 // import { axios } from "axios";
 import "./Register.css";
 import Popup from "../Popup/Popup";
-import img from "../../assets/person.jpg";
 
 // const initialValues = {
 //   firstName: "",
@@ -44,111 +43,106 @@ class Register extends Component {
     this.setState({ show: false });
   };
 
-  // const [trigger, settrigger] = useState(false);
-  // const [header, setheader] = useState("Initial");
-  // const [message, setmessage] = useState("message");
-  // const header = "I'm header";
   render() {
     return (
-      <div>
-        <Formik
-          initialValues={this.props.initialValues}
-          validationSchema={userSchema}
-          onSubmit={async (values, { resetForm }) => {
-            const payload = {
-              // make payload here using values
-              firstName: values.firstName,
-              lastName: values.lastName,
-              email: values.email,
-              password: values.password,
-            };
-            console.log(payload);
-            const dat = JSON.stringify(payload);
-            const requestOptions = {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: dat,
-            };
+      <div className="container d-flex justify-content-center ">
+        <div className="col-md-5 mt-5 shadow-lg p-5 rounded ">
+          <Formik
+            initialValues={this.props.initialValues}
+            validationSchema={userSchema}
+            onSubmit={async (values, { resetForm }) => {
+              const payload = {
+                // make payload here using values
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                password: values.password,
+              };
+              // console.log(payload);
+              const dat = JSON.stringify(payload);
+              const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: dat,
+              };
 
-            fetch("http://localhost:8080/api/users", requestOptions)
-              .then(async (response) => {
-                const isJson = response.headers
-                  .get("content-type")
-                  ?.includes("application/json");
-                const data = isJson && (await response.json());
+              fetch("http://localhost:8080/api/users", requestOptions)
+                .then(async (response) => {
+                  const isJson = response.headers
+                    .get("content-type")
+                    ?.includes("application/json");
+                  const data = isJson && (await response.json());
 
-                // check for error response
-                if (!response.ok) {
-                  const error =
-                    "Status:" +
-                    response.status +
-                    " " +
-                    "Response:" +
-                    response.statusText;
-                  this.setHeader("ERROR!");
-                  this.setMessage(error);
+                  // check for error response
+                  if (!response.ok) {
+                    const error =
+                      "Status:" +
+                      response.status +
+                      " " +
+                      "Response:" +
+                      response.statusText;
+                    this.setHeader("ERROR!");
+                    this.setMessage(error);
+                    this.showModal();
+                    console.log(response);
+                    // return Promise.reject(error);
+                  } else {
+                    console.log("User was successfully created");
+                    resetForm();
+                    this.setHeader("Success");
+                    this.setMessage("User was successfully created");
+                    this.showModal();
+                    // setheader("Changed");
+                    // settrigger(true);
+                  }
+                })
+                .catch((error) => {
+                  this.setHeader("ERROR");
+                  this.setMessage("error");
                   this.showModal();
-                  console.log(response);
-                  // return Promise.reject(error);
-                } else {
-                  console.log("User was successfully created");
-                  resetForm();
-                  this.setHeader("Success");
-                  this.setMessage("User was successfully created");
-                  this.showModal();
-                  // setheader("Changed");
-                  // settrigger(true);
-                }
-              })
-              .catch((error) => {
-                this.setHeader("ERROR");
-                this.setMessage("error");
-                this.showModal();
-                console.error("There was an error!", error);
-              });
-          }}
-        >
-          {(formik) => (
-            <div>
-              <Form>
-                <h1 className="my-4 font-weight-bold .display-4">Sign Up</h1>
-                <TextField label="First Name" name="firstName" type="text" />
-                <TextField label="last Name" name="lastName" type="text" />
-                <TextField label="Email" name="email" type="email" />
+                  console.error("There was an error!", error);
+                });
+            }}
+          >
+            {(formik) => (
+              <div>
+                <Form>
+                  <h1 className="my-4 font-weight-bold .display-4">Sign Up</h1>
+                  <TextField label="First Name" name="firstName" type="text" />
+                  <TextField label="last Name" name="lastName" type="text" />
+                  <TextField label="Email" name="email" type="email" />
 
-                <TextField label="Password" name="password" type="password" />
-                <TextField
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type="password"
-                />
-                <div class="d-flex justify-content-center">
-                  <button
-                    className="btn btn-dark mt-4"
-                    type="submit"
-                    disabled={!(formik.isValid && formik.dirty)}
-                  >
-                    Register
-                  </button>
+                  <TextField label="Password" name="password" type="password" />
+                  <TextField
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                  />
+                  <div className="d-flex justify-content-center">
+                    <button
+                      className="btn btn-dark mt-4"
+                      type="submit"
+                      disabled={!(formik.isValid && formik.dirty)}
+                    >
+                      Register
+                    </button>
 
-                  <button className="btn btn-danger mt-4 ms-4" type="reset">
-                    Reset
-                  </button>
-                </div>
-              </Form>
-            </div>
-          )}
-        </Formik>
+                    <button className="btn btn-danger mt-4 ms-4" type="reset">
+                      Reset
+                    </button>
+                  </div>
+                </Form>
+              </div>
+            )}
+          </Formik>
 
-        <Popup
-          show={this.state.show}
-          handleClose={this.hideModal}
-          message={this.state.message}
-          header={this.state.header}
-        />
-        {/* <button type="button" onClick={this.showModal}>
-          Open
-        </button> */}
+          <Popup
+            show={this.state.show}
+            handleClose={this.hideModal}
+            message={this.state.message}
+            header={this.state.header}
+          />
+        </div>
       </div>
     );
   }

@@ -2,7 +2,8 @@
 
 .homepage-bgimage {
   /* background: url("./assets/background2.jpg"); */
-  background-color: rgb(154, 202, 192);
+
+  /* background-color: rgb(154, 202, 192); */
   /* height: 100%; */
   background-repeat: no-repeat;
   background-size: cover;
